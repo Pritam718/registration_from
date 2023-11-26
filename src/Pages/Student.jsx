@@ -1,41 +1,24 @@
-import { useEffect, useState } from "react";
-
 import { useForm } from "react-hook-form";
-import postServices from ".././services/postServices";
+import postServices from "../services/postServices";
 import ".././App.css";
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import InfoShow from "./InfoShow";
 
 
 function Student() {
-//   const [items, setItems] = useState({
-//     fname: "",
-//     lname: "",
-//     phone: "",
-//     email: "",
-//     website: "",
-//     gender: "",
-//     java: "",
-//     css: "",
-//     html: "",
-//   });
+
   const { register, handleSubmit,reset } = useForm();
-  //const [loading,setLoading] =useState(false);
   
 
   const onSubmit = async (data) => {
-    //setItems(data);
     console.log(data);
     const res = postServices.create(data);
     console.log(res);
     reset();
-    //fetchPosts();
   };
-  //console.log(items);
 
   return (
     <>
-      <div className="m-5">
+      <div className="container">
         <div className="">
           <div>
             <div className="my-10 bg-slate-200 rounded-sm">
@@ -61,7 +44,6 @@ function Student() {
                     id="first_name"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="First Name"
-                    //required
                     {...register("fname", { required: true })}
                   />
                 </div>

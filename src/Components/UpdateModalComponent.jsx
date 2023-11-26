@@ -1,50 +1,37 @@
 import React, { useEffect, useState } from 'react'
 import { Modal,Button } from 'react-bootstrap';
 import postServices from '../services/postServices';
+import { useForm } from 'react-hook-form';
 //import toast from 'react-hot-toast';
 
-const UpdateModalComponent = (props) => {
+const UpdateModalComponent = ({fname,lname,phone,email,website,gender,java,css,html,id,fetchPosts}) => {
     const [isShow,invokeModal]=useState(false);
     const initModal=()=>{
        return invokeModal(!isShow);
     }
 
-    const[fname,setFname]=useState(props.fname);
-    const[lname,setLname]=useState(props.lname);
-    const[phone,setPhone]=useState(props.phone);
-    const[email,setEmail]=useState(props.email);
-    const[website,setWebsite]=useState(props.website);
-    const[gender,setGender]=useState(props.gender);
-    const[java,setJava]=useState(props.java);
-    const[css,setCss]=useState(props.css);
-    const[html,setHtml]=useState(props.html);
-    const[id,setId]=useState(props.id);
     
 
-    const handleSubmit=async(event)=>{
-        event.preventDefault();
+    const { register, handleSubmit } = useForm({defaultValues: {
+      firstName: fname,
+      lastName: lname,
+      phone: phone,
+      email: email,
+      website: website,
+      gender: gender,
+      java: java,
+      html: html,
+      css: css,
+  }});
+    
 
-
-        const payload={
-          firstName: fname,
-          lastName: lname,
-          phone: phone,
-          email: email,
-          website: website,
-          gender: gender,
-          java: java,
-          html: html,
-          css: css,
-      }
-        
-        
-       postServices.update(id,payload);
-       props.fetchPosts();
-     
+    const onSubmit=async(data)=>{
+       postServices.update(id,data);
+       fetchPosts();
        initModal();
     }
 
-    useEffect(()=>{props.fetchPosts()},[])
+    useEffect(()=>{fetchPosts()},[])
   return (
     
     <>
@@ -55,7 +42,7 @@ const UpdateModalComponent = (props) => {
         <Modal.Header closeButton onClick={initModal}>
             <Modal.Title>Update Post</Modal.Title>
         </Modal.Header>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit(onSubmit)}>
             <Modal.Body>
             <input
                     type="text"
@@ -63,7 +50,7 @@ const UpdateModalComponent = (props) => {
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="First Name"
                     value={fname}
-                    onChange={event=>setFname(event.target.value)}
+                    {...register("fname", { required: true })}
                     
                   />
                 <br/>
@@ -73,7 +60,7 @@ const UpdateModalComponent = (props) => {
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Last Name"
                     value={lname}
-                    onChange={event=>setLname(event.target.value)}
+                    {...register("lname", { required: true })}
                   />
                   <br/>
                   <input
@@ -81,8 +68,7 @@ const UpdateModalComponent = (props) => {
                     id="phone"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Phone Number"
-                    value={phone}
-                    onChange={event=>setPhone(event.target.value)}
+                    {...register("phone", { required: true })}
                   />
                   <br/>
                   <input
@@ -90,8 +76,7 @@ const UpdateModalComponent = (props) => {
                   id="email"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Email Address"
-                  value={email}
-                  onChange={event=>setEmail(event.target.value)}
+                  {...register("email", { required: true })}
                 />
 
                 <br/>
@@ -100,8 +85,7 @@ const UpdateModalComponent = (props) => {
                     id="website"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Website Link"
-                    value={website}
-                    onChange={event=>setWebsite(event.target.value)}
+                    {...register("website", { required: true })}
                   />
                 <br/>
                 <ul className="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
@@ -112,9 +96,8 @@ const UpdateModalComponent = (props) => {
                         value="male"
                         id='male'
                         name='gender'
-                        checked={gender==='male'}
                         className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                        onChange={event=>setGender(event.target.value)}
+                        {...register("gender")}
                       />
                       <label
                         htmlFor='male'
@@ -132,9 +115,8 @@ const UpdateModalComponent = (props) => {
                         value="female"
                         name='gender'
                         id='female'
-                        checked={gender==='female'}
                         className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                        onChange={event=>setGender(event.target.value)}
+                        {...register("gender")}
                       />
                       <label
                         htmlFor='female'
@@ -152,9 +134,8 @@ const UpdateModalComponent = (props) => {
                         value="other"
                         name='gender'
                         id='other'
-                        checked={gender==='other'}
                         className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                        onChange={event=>setGender(event.target.value)}
+                        {...register("gender")}
                       />
                       <label
                         htmlFor='other'
@@ -173,8 +154,8 @@ const UpdateModalComponent = (props) => {
                        
                         type="checkbox"
                         className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                        checked={java}
-                        onChange={event=>{setJava(event.target.checked)}}
+                        //checked={java}
+                        {...register("java")}
 
                       />
                       <label
@@ -191,9 +172,9 @@ const UpdateModalComponent = (props) => {
                         
                         type="checkbox"
                         
-                        checked={html}
+                        //checked={html}
                         className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                        onChange={event=>setHtml(event.target.checked)}
+                        {...register("html")}
                       />
                       <label
                         
@@ -209,9 +190,9 @@ const UpdateModalComponent = (props) => {
                        
                         type="checkbox"
                         
-                        checked={css}
+                        //checked={css}
                         className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                        onChange={event=>setCss(event.target.checked)}
+                        {...register("css")}
                       />
                       <label
                        

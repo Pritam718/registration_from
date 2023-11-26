@@ -5,8 +5,8 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Toaster } from 'react-hot-toast';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Student from './Components/Student';
-import InfoShow from './Components/InfoShow';
+import Student from './Pages/Student';
+import InfoShow from './Pages/InfoShow';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
