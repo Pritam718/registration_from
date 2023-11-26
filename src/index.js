@@ -1,23 +1,18 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import { Toaster } from 'react-hot-toast';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Student from './Pages/Student';
-import InfoShow from './Pages/InfoShow';
+import React, { useEffect } from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { Provider, useDispatch } from "react-redux";
+import store from "./redux/store";
+import { checkAuth } from "./redux/actions/userAction";
+const root = ReactDOM.createRoot(document.getElementById("root"));
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+store.dispatch(checkAuth());
 root.render(
-  <BrowserRouter>
-      <Toaster/>
-      <Routes>
-        <Route path='/' element={<App/>}></Route>
-        <Route path="/info" element={<InfoShow/>}>
-        </Route>
-      </Routes>
-    </BrowserRouter>
+  <Provider store={store}>
+    <App />
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

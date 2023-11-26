@@ -3,15 +3,12 @@ import postServices from "../services/postServices";
 import ".././App.css";
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
-
 function Student() {
-
-  const { register, handleSubmit,reset } = useForm();
-  
+  const { register, handleSubmit, reset } = useForm();
 
   const onSubmit = async (data) => {
     console.log(data);
-    const res = postServices.create(data);
+    const res = await postServices.create(data);
     console.log(res);
     reset();
   };
@@ -235,10 +232,6 @@ function Student() {
               </button>
             </form>
           </div>
-
-          
-          
-          
         </div>
       </div>
     </>

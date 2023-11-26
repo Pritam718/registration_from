@@ -4,14 +4,19 @@ import postServices from "../services/postServices";
 import toast from "react-hot-toast";
 import { DownloadTableExcel } from "react-export-table-to-excel";
 import { Button } from "react-bootstrap";
+import authService from "../services/authService";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 const InfoShow = () => {
   const [posts, setPosts] = useState([]);
   const tableRef = useRef(null);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const fetchPosts = async () => {
-    const { data } = await postServices.getPost();
-    setPosts(data?.data);
+    const { data } = await postServices.get();
+    setPosts(data);
   };
 
   useEffect(() => {
@@ -21,19 +26,14 @@ const InfoShow = () => {
   console.log(posts);
 
   const deletePost = async (id, e) => {
-    var response = await postServices.deletePost(id);
-    if (response.data.success === true) {
-      toast(response.data.msg, {
-        style: {
-          borderRadius: "10px",
-          background: "#8b0000",
-          color: "#fff",
-        },
-      });
-      fetchPosts();
-    } else {
-      alert(response.data.msg);
-    }
+    await postServices.delete(id);
+    fetchPosts();
+  };
+
+  const handelLogout = async () => {
+    await authService.logout();
+    dispatch({ type: "LOGOUT" });
+    navigate("/login");
   };
   return (
     <div className="container">
@@ -44,15 +44,17 @@ const InfoShow = () => {
           </h1>
         </div>
       </div>
-      <div className="flex flex-row-reverse">
-
-      <DownloadTableExcel
-        filename="student table"
-        sheet="student"
-        currentTableRef={tableRef.current}
-      >
-        <Button variant='success'> Export excel </Button>
-      </DownloadTableExcel>
+      <div className="flex flex-row-reverse gap-3">
+        <Button variant="danger" onClick={handelLogout}>
+          Logout
+        </Button>
+        <DownloadTableExcel
+          filename="student table"
+          sheet="student"
+          currentTableRef={tableRef.current}
+        >
+          <Button variant="success"> Export excel </Button>
+        </DownloadTableExcel>
       </div>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-3">
         {posts !== undefined && posts?.length > 0 && (
@@ -136,8 +138,6 @@ const InfoShow = () => {
                 ))}
               </tbody>
             </table>
-
-            
           </>
         )}
       </div>
