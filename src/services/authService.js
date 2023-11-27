@@ -1,12 +1,13 @@
 import axios from "axios";
 import { AUTH_URL } from "../Config/ap.config";
 import toast from "react-hot-toast";
+import { axiosInit } from "./axiosInit";
 
 class Auth {
   async login(payload) {
     let data = {};
-    await axios
-      .post(`${AUTH_URL}/login`, payload, { withCredentials: true })
+    await axiosInit
+      .post(`${AUTH_URL}/login`, payload)
       .then((res) => {
         toast.success(res.data?.message);
         data = res.data;
@@ -20,7 +21,7 @@ class Auth {
   }
 
   async logout() {
-    await axios
+    await axiosInit
       .post(`${AUTH_URL}/logout`)
       .then((res) => {
         //toast.success("");

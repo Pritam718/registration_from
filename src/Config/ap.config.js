@@ -1,4 +1,5 @@
-export const BASE_URL = "/api";
+export const BASE_URL = "http://localhost:8000/api";
+export const SOCKET_URL = "http://localhost:8000";
 
 //student url
 export const STUDENT_URL = `${BASE_URL}/student`;

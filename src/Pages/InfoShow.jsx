@@ -7,6 +7,8 @@ import { Button } from "react-bootstrap";
 import authService from "../services/authService";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import io from "socket.io-client";
+import { SOCKET_URL } from "../Config/ap.config";
 
 const InfoShow = () => {
   const [posts, setPosts] = useState([]);
@@ -21,9 +23,14 @@ const InfoShow = () => {
 
   useEffect(() => {
     fetchPosts();
+    const socket = io(SOCKET_URL);
+    socket.on("newRecord", (newRecord) => {
+      setPosts((prevRecord) => [...prevRecord, newRecord]);
+    });
+    return () => {
+      socket.disconnect();
+    };
   }, []);
-
-  console.log(posts);
 
   const deletePost = async (id, e) => {
     await postServices.delete(id);

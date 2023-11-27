@@ -1,5 +1,6 @@
 import axios from "axios";
 import toast from "react-hot-toast";
+import { axiosInit } from "./axiosInit";
 
 class BaseApiService {
   _url = "";
@@ -10,7 +11,7 @@ class BaseApiService {
 
   async create(payload) {
     let data = {};
-    await axios
+    await axiosInit
       .post(this._url, payload)
       .then((res) => {
         toast.success(res.data?.msg);
@@ -25,7 +26,7 @@ class BaseApiService {
 
   async get() {
     let data = {};
-    await axios
+    await axiosInit
       .get(this._url)
       .then((res) => {
         data = res.data;
@@ -38,7 +39,7 @@ class BaseApiService {
   }
   async delete(id) {
     const url = `${this._url}/${id}`;
-    await axios
+    await axiosInit
       .delete(url)
       .then((res) => {
         toast.success(res.data?.msg);
@@ -51,7 +52,7 @@ class BaseApiService {
   async update(id, payload) {
     const url = `${this._url}/${id}`;
     let data = {};
-    await axios
+    await axiosInit
       .put(url, payload)
       .then((res) => {
         toast.success(res.data?.msg);
