@@ -1,10 +1,6 @@
 const isProd = true;
-export const BASE_URL = isProd
-  ? "https://student-enrolment-backend.onrender.com/api"
-  : "http://localhost:8000/api";
-export const SOCKET_URL = isProd
-  ? "https://student-enrolment-backend.onrender.com/"
-  : "http://localhost:8000";
+export const BASE_URL = isProd ? "/api" : "http://localhost:8000/api";
+export const SOCKET_URL = isProd ? "" : "http://localhost:8000";
 
 //student url
 export const STUDENT_URL = `${BASE_URL}/student`;
