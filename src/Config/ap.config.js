@@ -1,6 +1,5 @@
-const isProd = true;
-export const BASE_URL = isProd ? "/api" : "http://localhost:8000/api";
-export const SOCKET_URL = isProd ? "" : "http://localhost:8000";
+export const BASE_URL = "/api";
+export const SOCKET_URL = "";
 
 //student url
 export const STUDENT_URL = `${BASE_URL}/student`;
