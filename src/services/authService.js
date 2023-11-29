@@ -15,7 +15,7 @@ class Auth {
       .catch((err) => {
         if (err?.response?.status === 401)
           return toast.error("incorrect username or password");
-        else return toast.error(err?.response?.data?.msg);
+        else return toast.error(err?.response?.data?.message);
       });
     return data;
   }
@@ -28,7 +28,7 @@ class Auth {
       })
       .catch((err) => {
         console.log(err?.response);
-        toast.error(err?.response?.data?.msg);
+        toast.error(err?.response?.data?.message);
       });
   }
 }

@@ -14,12 +14,12 @@ class BaseApiService {
     await axiosInit
       .post(this._url, payload)
       .then((res) => {
-        toast.success(res.data?.msg);
+        toast.success(res.data?.message);
         data = res.data;
       })
       .catch((err) => {
         console.log(err?.response);
-        toast.error(err?.response?.data?.msg);
+        toast.error(err?.response?.data?.message);
       });
     return data;
   }
@@ -33,7 +33,7 @@ class BaseApiService {
       })
       .catch((err) => {
         console.log(err?.response);
-        toast.error(err?.response?.data?.msg);
+        toast.error(err?.response?.data?.message);
       });
     return data;
   }
@@ -42,11 +42,11 @@ class BaseApiService {
     await axiosInit
       .delete(url)
       .then((res) => {
-        toast.success(res.data?.msg);
+        toast.success(res.data?.message);
       })
       .catch((err) => {
         console.log(err?.response);
-        toast.error(err?.response?.data?.msg);
+        toast.error(err?.response?.data?.message);
       });
   }
   async update(id, payload) {
@@ -55,12 +55,12 @@ class BaseApiService {
     await axiosInit
       .put(url, payload)
       .then((res) => {
-        toast.success(res.data?.msg);
+        toast.success(res.data?.message);
         data = res.data;
       })
       .catch((err) => {
         console.log(err?.response);
-        toast.error(err?.response?.data?.msg);
+        toast.error(err?.response?.data?.message);
       });
     return data;
   }

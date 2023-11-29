@@ -24,8 +24,8 @@ const UpdateModalComponent = ({
 
   const { register, handleSubmit } = useForm({
     defaultValues: {
-      firstName: fname,
-      lastName: lname,
+      fname: fname,
+      lname: lname,
       phone: phone,
       email: email,
       website: website,
